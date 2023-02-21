@@ -1,4 +1,4 @@
-from flask import Flask, request, make_response
+from flask import Flask, request
 from flask.json import jsonify
 
 application = Flask(__name__)
@@ -12,12 +12,12 @@ def home():
             "/users" : ""
         }
     }
-    res = make_response(api)
+    res = jsonify(api)
     return res
 
 @application.route('/hello', methods=['GET'])
 def hello_world():
-    res = make_response(jsonify({"res" : "Hello World"}))
+    res = jsonify({"res" : "Hello World"})
     return res
 
 if __name__ == '__main__':
