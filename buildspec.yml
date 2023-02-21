@@ -1,0 +1,11 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - cd /codebuild/output/src/<your-project-folder>
+      - zip -r outages_db.zip *
+      
+artifacts:
+  files:
+    - outages_db.zip
