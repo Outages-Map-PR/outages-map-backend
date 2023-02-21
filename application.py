@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask.json import jsonify
 
 application = Flask(__name__)
+application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 @application.route('/', methods=['GET'])
 def home():
