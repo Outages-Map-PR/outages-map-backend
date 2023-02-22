@@ -5,7 +5,6 @@ from flask.json import jsonify
 # CONTROLLERS
 from controllers.user import User
 
-
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 

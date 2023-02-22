@@ -6,10 +6,8 @@ class UserDAO():
         connection_url = "dbname=%s user=%s password=%s port=%s host=%s" % (pg_config['dbname'],
         pg_config['user'], pg_config['password'],pg_config['port'], pg_config['host'])
         self.conn = psycopg2.connect(connection_url)
-        print("INIT USERDAO")
         
     def getAllUsers(self):
-        print("GETTING ALL USERS")
         cursor = self.conn.cursor()
         query = "select user_id, user_name, user_email, user_phone, user_password from \"user\";"
         cursor.execute(query)
