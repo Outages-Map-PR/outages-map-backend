@@ -26,13 +26,13 @@ def hello_world():
     return res
 
 # USER API ROUTES
-# @application.route('/API/user', methods=['GET'])
-# def user_route():
-#     if request.method == 'GET':
-#         res = User().getAllUsers()
-#         return res
-#     else:
-#         return {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+@application.route('/API/user', methods=['GET'])
+def user_route():
+    if request.method == 'GET':
+        res = User().getAllUsers()
+        return res
+    else:
+        return {"error": "METHOD NOT SUPPORTED IN ROUTE"}
 
 if __name__ == '__main__':
     application.run()
