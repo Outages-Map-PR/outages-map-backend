@@ -1,12 +1,16 @@
 # APPLICATION LIBRARIES
-from flask import Flask, request
+from flask import Flask, request, make_response
 from flask.json import jsonify
+from flask_cors import CORS, cross_origin
 
 # CONTROLLERS
 from controllers.user import User
 
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+CORS(application, resources={
+    r"/*": {"origins": "*"}
+}, supports_credentials=True)
 
 @application.route('/', methods=['GET'])
 def home():
@@ -29,10 +33,13 @@ def hello_world():
 @application.route('/API/user', methods=['GET'])
 def user_route():
     if request.method == 'GET':
-        res = User().getAllUsers()
+        res = make_response(User().getAllUsers())
+        res.headers['Access-Control-Allow-Origin'] = '*'
         return res
     else:
-        return {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        res = make_response({"error": "METHOD NOT SUPPORTED IN ROUTE"})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
 
 if __name__ == '__main__':
     application.run()
