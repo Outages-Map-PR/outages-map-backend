@@ -4,6 +4,7 @@ from flask.json import jsonify
 
 # CONTROLLERS
 from controllers.user import User
+from controllers.mediaReport import MediaReport
 
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -34,6 +35,34 @@ def user_route():
     else:
         res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return res
+
+# MEDIA REPORT ROUTES
+@application.route('/API/mediareport', methods=['GET', 'POST', 'PUT'])
+def mediareport_route():
+    if request.method == 'GET':
+        res = MediaReport().getAllMediaReports()
+        return res
+    elif request.method == 'POST':
+        res = MediaReport().insertMediaReport(request.json)
+        return res
+    elif request.method == 'PUT':
+        res = MediaReport().updateMediaReport(request.json)
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
+    
+@application.route('/API/mediareport/<int:report_id>', methods=['GET', 'DELETE'])
+def mediareport_byid_route(report_id):
+    if request.method == 'GET':
+        res = MediaReport().getMediaReportById(report_id)
+        return res
+    elif request.method == 'DELETE':
+        res = MediaReport().deleteMediaReport(report_id)
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
 
 if __name__ == '__main__':
     application.run()
