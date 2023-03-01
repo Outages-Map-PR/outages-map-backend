@@ -44,7 +44,7 @@ class User:
 
     def updateUser(self, json):
         dao = UserDAO()
-        updated_user = dao.updateUser(self, json[0], json[1], json[2], json[3])
+        updated_user = dao.updateUser(json[0], json[1], json[2], json[3])
         result = self.build_row_dict(updated_user)
         return result
 
