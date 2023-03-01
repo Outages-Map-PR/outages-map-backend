@@ -5,6 +5,7 @@ from flask.json import jsonify
 # CONTROLLERS
 from controllers.user import User
 from controllers.outagesMap import OutagesMap
+from controllers.apiReport import ApiReport
 
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -47,7 +48,6 @@ def outagesmap_route():
         return res
     elif request.method == 'PUT':
         res = OutagesMap().updateOutages(request.json)
-        return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
@@ -71,6 +71,33 @@ def outages_map_byreportid_route(report_id):
         return res
     elif request.method == 'DELETE':
         res = OutagesMap().deleteOutagesByReportId(report_id)
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
+    
+# API REPORT ROUTES
+@application.route('/API/apireport', methods=['GET', 'POST', 'PUT'])
+def apireport_route():
+    if request.method == 'GET':
+        res = ApiReport().getAllApiReports()
+        return res
+    elif request.method == 'POST':
+        res = ApiReport().insertApiReport(request.json)
+        return res
+    elif request.method == 'PUT':
+        res = ApiReport().updateApiReport(request.json)
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
+        
+@application.route('/API/apireport/<int:report_id>', methods=['GET', 'DELETE'])
+def apireport_byid_route(report_id):
+    if request.method == 'GET':
+        res = ApiReport().getApiReportById(report_id)
+        return res
+    elif request.method == 'DELETE':
+        res = ApiReport().deleteApiReport(report_id)
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
