@@ -55,3 +55,21 @@ class UserDAO:
         self.conn.commit()
         affected_rows = cursor.rowcount
         return affected_rows != 0
+
+    def checkEmails(self):
+        cursor = self.conn.cursor()
+        query = "select user_email from \"user\""
+        cursor.execute(query)
+        result = []
+        for rows in cursor:
+            result.append(rows)
+        return result
+
+    def checkUsernames(self):
+        cursor = self.conn.cursor()
+        query = "select user_name from \"user\""
+        cursor.execute(query)
+        result = []
+        for rows in cursor:
+            result.append(rows)
+        return result
