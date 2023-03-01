@@ -6,6 +6,7 @@ from flask.json import jsonify
 from controllers.user import User
 from controllers.outagesMap import OutagesMap
 from controllers.apiReport import ApiReport
+from controllers.mediaReport import MediaReport
 
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -38,6 +39,7 @@ def user_route():
         return res
 
 # OUTAGES MAP REPORT ROUTES
+
 @application.route('/API/outagesmap', methods=['GET', 'POST', 'PUT'])
 def outagesmap_route():
     if request.method == 'GET':
@@ -48,6 +50,7 @@ def outagesmap_route():
         return res
     elif request.method == 'PUT':
         res = OutagesMap().updateOutages(request.json)
+        return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
@@ -71,11 +74,42 @@ def outages_map_byreportid_route(report_id):
         return res
     elif request.method == 'DELETE':
         res = OutagesMap().deleteOutagesByReportId(report_id)
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
+    
+# MEDIA REPORT ROUTES
+
+@application.route('/API/mediareport', methods=['GET', 'POST', 'PUT'])
+def mediareport_route():
+    if request.method == 'GET':
+        res = MediaReport().getAllMediaReports()
+        return res
+    elif request.method == 'POST':
+        res = MediaReport().insertMediaReport(request.json)
+        return res
+    elif request.method == 'PUT':
+        res = MediaReport().updateMediaReport(request.json)
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
+        
+@application.route('/API/mediareport/<int:report_id>', methods=['GET', 'DELETE'])
+def mediareport_byid_route(report_id):
+    if request.method == 'GET':
+        res = MediaReport().getMediaReportById(report_id)
+        return res
+    elif request.method == 'DELETE':
+        res = MediaReport().deleteMediaReport(report_id)
+        return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
     
 # API REPORT ROUTES
+
 @application.route('/API/apireport', methods=['GET', 'POST', 'PUT'])
 def apireport_route():
     if request.method == 'GET':
@@ -102,6 +136,7 @@ def apireport_byid_route(report_id):
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
+
 
 if __name__ == '__main__':
     application.run()
