@@ -4,6 +4,7 @@ from flask.json import jsonify
 
 # CONTROLLERS
 from controllers.user import User
+from controllers.user_report import UserReport
 
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -50,8 +51,75 @@ def user_route():
 
 @application.route('/API/user/login', methods=['GET'])
 def login_route():
-    if request == 'GET':
+    if request.method == 'GET':
         res = User().login(request.json)
+        return res
+    else:
+        res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return jsonify(res)
+
+
+# USER REPORT ROUTES
+@application.route('/API/report/user', methods=['GET', 'PUT', 'POST'])
+def user_report_routes():
+    if request.method == 'GET':
+        res = UserReport().getAllReports()
+        return res
+    elif request.method == 'PUT':
+        res = UserReport().updateValidation(request.json)
+        return res
+    elif request.method == 'POST':
+        res = UserReport().createReport(request.json)
+        return res
+    else:
+        res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return jsonify(res)
+
+
+@application.route('/API/report/user/match/type', methods=['GET'])
+def user_match_type():
+    if request.method == 'GET':
+        res = UserReport().getSameTypeReports(request.json)
+        return res
+    else:
+        res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return jsonify(res)
+
+
+@application.route('/API/report/user/match/user', methods=['GET'])
+def user_match_type():
+    if request.method == 'GET':
+        res = UserReport().getSameUserReports(request.json)
+        return res
+    else:
+        res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return jsonify(res)
+
+
+@application.route('/API/report/user/match/date', methods=['GET'])
+def user_match_type():
+    if request.method == 'GET':
+        res = UserReport().getSameDateReports(request.json)
+        return res
+    else:
+        res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return jsonify(res)
+
+
+@application.route('/API/report/user/match/address', methods=['GET'])
+def user_match_type():
+    if request.method == 'GET':
+        res = UserReport().getSameAddressReports(request.json)
+        return res
+    else:
+        res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return jsonify(res)
+
+
+@application.route('/API/report/user/match/company', methods=['GET'])
+def user_match_type():
+    if request.method == 'GET':
+        res = UserReport().getSameCompanyReports(request.json)
         return res
     else:
         res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
