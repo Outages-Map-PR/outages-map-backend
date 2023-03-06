@@ -4,6 +4,7 @@ from flask.json import jsonify
 
 # CONTROLLERS
 from controllers.user import User
+from controllers.outagesMap import OutagesMap
 
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -34,6 +35,46 @@ def user_route():
     else:
         res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return res
+
+# OUTAGES MAP REPORT ROUTES
+@application.route('/API/outagesmap', methods=['GET', 'POST', 'PUT'])
+def outagesmap_route():
+    if request.method == 'GET':
+        res = OutagesMap().getAllOutages()
+        return res
+    elif request.method == 'POST':
+        res = OutagesMap().insertOutages(request.json)
+        return res
+    elif request.method == 'PUT':
+        res = OutagesMap().updateOutages(request.json)
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
+    
+@application.route('/API/outagesmap/<int:outages_id>', methods=['GET', 'DELETE'])
+def outagesmap_byid_route(outages_id):
+    if request.method == 'GET':
+        res = OutagesMap().getOutagesById(outages_id)
+        return res
+    elif request.method == 'DELETE':
+        res = OutagesMap().deleteOutages(outages_id)
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
+    
+@application.route('/API/outagesmap/reportid/<int:report_id>', methods=['GET', 'DELETE'])
+def outages_map_byreportid_route(report_id):
+    if request.method == 'GET':
+        res = OutagesMap().getOutagesByReportId(report_id)
+        return res
+    elif request.method == 'DELETE':
+        res = OutagesMap().deleteOutagesByReportId(report_id)
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
 
 if __name__ == '__main__':
     application.run()
