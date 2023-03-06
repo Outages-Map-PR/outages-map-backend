@@ -87,7 +87,7 @@ def user_match_type():
 
 
 @application.route('/API/report/user/match/user', methods=['GET'])
-def user_match_type():
+def user_match_user():
     if request.method == 'GET':
         res = UserReport().getSameUserReports(request.json)
         return res
@@ -97,7 +97,7 @@ def user_match_type():
 
 
 @application.route('/API/report/user/match/date', methods=['GET'])
-def user_match_type():
+def user_match_date():
     if request.method == 'GET':
         res = UserReport().getSameDateReports(request.json)
         return res
@@ -107,7 +107,7 @@ def user_match_type():
 
 
 @application.route('/API/report/user/match/address', methods=['GET'])
-def user_match_type():
+def user_match_address():
     if request.method == 'GET':
         res = UserReport().getSameAddressReports(request.json)
         return res
@@ -117,7 +117,7 @@ def user_match_type():
 
 
 @application.route('/API/report/user/match/company', methods=['GET'])
-def user_match_type():
+def user_match_company():
     if request.method == 'GET':
         res = UserReport().getSameCompanyReports(request.json)
         return res
