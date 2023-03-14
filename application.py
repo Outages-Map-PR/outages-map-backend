@@ -51,6 +51,14 @@ def user_route():
         res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return jsonify(res)
 
+@application.route('/API/user/#/<int:user_id>', methods=['GET'])
+def userid_routes(user_id):
+    if request.method == 'GET':
+        res = User().getUserbyID(user_id)
+        return res
+    else:
+        res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return jsonify(res)
 
 @application.route('/API/user/login', methods=['GET'])
 def login_route():
