@@ -5,13 +5,9 @@ from model.user import UserDAO
 class User:
     def build_row_dict(self, row):
         result = {
-            "user_id": row[0],
-            "user_name": row[1],
-            "user_email": row[2],
-            "user_phone": row[3],
-            "user_password": row[4],
-            'created_at': row[5],
-            'updated_at': row[6]
+            "user_name": row[0],
+            "user_email": row[1],
+            "user_phone": row[2],
         }
         return result
 
