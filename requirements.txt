@@ -4,3 +4,5 @@ locust~=2.15.0
 gunicorn==20.1.0
 psycopg2-binary==2.9.1
 folium~=0.14.0
+geopandas==0.12.2
+geopy==2.3.0
