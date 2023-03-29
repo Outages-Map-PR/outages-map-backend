@@ -241,7 +241,6 @@ def apireport_byid_route(report_id):
 @application.route('/API/utils/latlon', methods=['GET'])
 def address_to_latlon():
     if request.method == 'GET':
-        print(request.json)
         res = utilMethods().addressToLatLong(request.json)
         return res
     else:
