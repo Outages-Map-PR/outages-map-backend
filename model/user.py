@@ -64,6 +64,7 @@ class UserDAO:
         result = []
         for rows in cursor:
             result.append(rows)
+        cursor.close()
         return result
 
     def checkUsernames(self):
@@ -73,4 +74,13 @@ class UserDAO:
         result = []
         for rows in cursor:
             result.append(rows)
+        cursor.close()
+        return result
+
+    def getUserbyID(self, user_id):
+        cursor = self.conn.cursor()
+        query = "select user_name from \"user\" where %s"
+        cursor.execute(query, user_id)
+        result = cursor.fetchone()[0]
+        cursor.close()
         return result

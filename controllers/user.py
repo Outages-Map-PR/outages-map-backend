@@ -77,3 +77,11 @@ class User:
             return jsonify("USER DELETION COMPLETE"), 200
         else:
             return jsonify("USER NOT FOUND"), 404
+
+    def getUserbyID(self, user_id):
+        dao = UserDAO()
+        username = dao.getUserbyID(user_id)
+        if username:
+            return jsonify(username), 200
+        else:
+            return jsonify("USER NOT FOUND"), 404

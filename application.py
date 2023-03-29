@@ -1,6 +1,8 @@
 # APPLICATION LIBRARIES
-from flask import Flask, request
+from flask import Flask, request, render_template_string
 from flask.json import jsonify
+import folium
+from flask_cors import CORS
 
 # CONTROLLERS
 from controllers.user import User
@@ -11,6 +13,7 @@ from controllers.user_report import UserReport
 
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+CORS(application)
 
 
 @application.route('/', methods=['GET'])
@@ -52,10 +55,22 @@ def user_route():
         return jsonify(res)
 
 
-@application.route('/API/user/login', methods=['GET'])
-def login_route():
+@application.route('/API/user/#/<int:user_id>', methods=['GET'])
+def userid_routes(user_id):
     if request.method == 'GET':
+        res = User().getUserbyID(user_id)
+        res.headers.add('Access-Control-Allow-Origin', '*')
+        return res
+    else:
+        res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return jsonify(res)
+
+
+@application.route('/API/user/login', methods=['POST'])
+def login_route():
+    if request.method == 'POST':
         res = User().login(request.json)
+
         return res
     else:
         res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
@@ -233,6 +248,42 @@ def apireport_byid_route(report_id):
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
+
+
+@application.route("/components")
+def components():
+    """Extract map components and put those on a page."""
+    m = folium.Map(
+        location=[18.2269, -66.391],
+        width=800,
+        height=600,
+        zoom_start=9
+    )
+
+    m.get_root().render()
+    header = m.get_root().header.render()
+    body_html = m.get_root().html.render()
+    script = m.get_root().script.render()
+
+    return render_template_string(
+        """
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    {{ header|safe }}
+                </head>
+                <body>
+                    {{ body_html|safe }}
+                    <script>
+                        {{ script|safe }}
+                    </script>
+                </body>
+            </html>
+        """,
+        header=header,
+        body_html=body_html,
+        script=script,
+    )
 
 
 if __name__ == '__main__':
