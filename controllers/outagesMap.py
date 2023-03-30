@@ -1,5 +1,12 @@
 from flask import jsonify
+
+from controllers.utilMethods import utilMethods
+from model.apiReport import ApiReportDAO
+from model.mediaReport import MediaReportDAO
 from model.outagesMap import OutagesMapDAO
+from model.user_report import UserReportDao
+from model.utilMethods import utilMethodsDAO
+
 
 class OutagesMap:
     
@@ -43,7 +50,7 @@ class OutagesMap:
         result = []
         for t in tuples:
             result.append(self.build_row_dict(t))
-        return jsonify(result)
+        return result
     
     def getOutagesById(self, outages_id):
         dao = OutagesMapDAO()
@@ -84,6 +91,88 @@ class OutagesMap:
         dao = OutagesMapDAO()
         outages_id = dao.insertOutages(report_id, outage_type, outage_lat, outage_lng, outage_source, outage_date, outage_company, active)
         result = self.build_attr_dict(outages_id, report_id, outage_type, outage_lat, outage_lng, outage_source, outage_date, outage_company, active)
+        return jsonify(result)
+
+    def insertAPIOutages(self, report_id):
+        json = ApiReportDAO().getAllApiReportsById(report_id)
+        if not json:
+            return jsonify("REPORT NOT FOUND")
+        # return str(json[6])
+        coordinates = utilMethodsDAO().addressToLatLon(json[2])
+        for lat_lng in coordinates:
+            if lat_lng != "ERROR":
+                arr = coordinates[lat_lng].split(",")
+                latitude = arr[0]
+                longitude = arr[1]
+                break
+        report_id = json[0]
+        outage_type = json[3]
+        outage_lat = latitude
+        outage_lng = longitude
+        outage_source = "API " + json[1]
+        outage_date = json[5]
+        outage_company = json[4]
+        active = True
+        dao = OutagesMapDAO()
+        outages_id = dao.insertOutages(report_id, outage_type, outage_lat, outage_lng, outage_source, outage_date,
+                                       outage_company, active)
+        result = self.build_attr_dict(outages_id, report_id, outage_type, outage_lat, outage_lng, outage_source,
+                                      outage_date, outage_company, active)
+        return jsonify(result)
+
+    def insertMediaOutages(self, report_id):
+        json = MediaReportDAO().getAllMediaReportsById(report_id)
+        if not json:
+            return jsonify("REPORT NOT FOUND")
+        # return str(json)
+        coordinates = utilMethodsDAO().addressToLatLon(json[2])
+        for lat_lng in coordinates:
+            if coordinates[lat_lng] != "ERROR":
+                arr = coordinates[lat_lng].split(",")
+                latitude = arr[0]
+                longitude = arr[1]
+                break
+        report_id = json[0]
+        outage_type = json[3]
+        outage_lat = latitude
+        outage_lng = longitude
+        outage_source = "Media " + json[1]
+        outage_date = json[5]
+        outage_company = json[4]
+        active = True
+        dao = OutagesMapDAO()
+        outages_id = dao.insertOutages(report_id, outage_type, outage_lat, outage_lng, outage_source, outage_date,
+                                       outage_company, active)
+        result = self.build_attr_dict(outages_id, report_id, outage_type, outage_lat, outage_lng, outage_source,
+                                      outage_date, outage_company, active)
+        return jsonify(result)
+
+
+    def insertUserOutages(self, report_id):
+        json = UserReportDao().getAllUserReportsById(report_id)
+        if not json:
+            return jsonify("REPORT NOT FOUND")
+        # return str(json)
+        coordinates = utilMethodsDAO().addressToLatLon(json[2])
+        for lat_lng in coordinates:
+            if coordinates[lat_lng] != "ERROR":
+                arr = coordinates[lat_lng].split(",")
+                latitude = arr[0]
+                longitude = arr[1]
+                break
+        report_id = json[0]
+        outage_type = json[3]
+        outage_lat = latitude
+        outage_lng = longitude
+        outage_source = "User " + json[1]
+        outage_date = json[5]
+        outage_company = json[4]
+        active = True
+        dao = OutagesMapDAO()
+        outages_id = dao.insertOutages(report_id, outage_type, outage_lat, outage_lng, outage_source, outage_date,
+                                       outage_company, active)
+        result = self.build_attr_dict(outages_id, report_id, outage_type, outage_lat, outage_lng, outage_source,
+                                      outage_date, outage_company, active)
         return jsonify(result)
         
     def deleteOutages(self, outages_id):

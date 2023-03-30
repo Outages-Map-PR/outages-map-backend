@@ -78,6 +78,13 @@ class UserReportDao:
         self.conn.commit()
         return report_id
 
+    def getAllUserReportsById(self, report_id):
+        cursor = self.conn.cursor()
+        query = "select report_id, user_name, report_address, report_type, report_company, report_date from \"user_report\" where report_id = %s;"
+        cursor.execute(query, (report_id,))
+        result = cursor.fetchone()
+        return result
+
     def updateValidation(self, report_id):
         cursor = self.conn.cursor()
         query = "update \"user_report\" set report_validated = true where report_id = %s"

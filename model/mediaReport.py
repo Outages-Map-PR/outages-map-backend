@@ -30,10 +30,10 @@ class MediaReportDAO():
         self.conn.commit()
         return True
 
-    def insertMediaReport(self, media_type, report_address, report_type, report_company, report_date):
+    def insertMediaReport(self, media_type, report_address, report_type, report_company):
         cursor = self.conn.cursor()
-        query = "insert into media_report (media_type, report_address, report_type, report_company, report_date) values (%s, %s, %s, %s, %s) returning report_id;"
-        cursor.execute(query, (media_type, report_address, report_type, report_company, report_date,))
+        query = "insert into media_report (media_type, report_address, report_type, report_company, report_date) values (%s, %s, %s, %s, current_date) returning report_id;"
+        cursor.execute(query, (media_type, report_address, report_type, report_company,))
         user_id = cursor.fetchone()[0]
         self.conn.commit()
         return user_id

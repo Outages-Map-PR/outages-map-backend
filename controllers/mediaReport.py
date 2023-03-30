@@ -1,4 +1,6 @@
 from flask import jsonify
+
+from controllers.outagesMap import OutagesMap
 from model.mediaReport import MediaReportDAO
 
 class MediaReport:
@@ -62,11 +64,11 @@ class MediaReport:
         report_address = json['report_address']
         report_type = json['report_type']
         report_company = json['report_company']
-        report_date = json['report_date']
         dao = MediaReportDAO()
-        report_id = dao.insertMediaReport(media_type, report_address, report_type, report_company, report_date)
-        result = self.build_attr_dict(report_id, media_type, report_address, report_type, report_company, report_date)
-        return jsonify(result)
+        report_id = dao.insertMediaReport(media_type, report_address, report_type, report_company)
+        result = self.build_attr_dict(report_id, media_type, report_address, report_type, report_company, "today")
+        outage_map = OutagesMap().insertMediaOutages(report_id)
+        return outage_map
         
     def deleteMediaReport(self, report_id):
         dao = MediaReportDAO()

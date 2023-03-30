@@ -1,4 +1,6 @@
 from flask import jsonify
+
+from controllers.outagesMap import OutagesMap
 from model.apiReport import ApiReportDAO
 
 class ApiReport:
@@ -62,11 +64,11 @@ class ApiReport:
         report_address = json['report_address']
         report_type = json['report_type']
         report_company = json['report_company']
-        report_date = json['report_date']
         dao = ApiReportDAO()
-        report_id = dao.insertApiReport(api_name, report_address, report_type, report_company, report_date)
-        result = self.build_attr_dict(report_id, api_name, report_address, report_type, report_company, report_date)
-        return jsonify(result)
+        report_id = dao.insertApiReport(api_name, report_address, report_type, report_company)
+        result = self.build_attr_dict(report_id, api_name, report_address, report_type, report_company, "today")
+        outage_insert = OutagesMap().insertAPIOutages(report_id)
+        return outage_insert
         
     def deleteApiReport(self, report_id):
         dao = ApiReportDAO()

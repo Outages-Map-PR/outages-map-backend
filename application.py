@@ -1,8 +1,10 @@
 # APPLICATION LIBRARIES
+import pandas
 from flask import Flask, request, render_template_string
 from flask.json import jsonify
 import folium
 from flask_cors import CORS
+from collections import defaultdict
 
 # CONTROLLERS
 from controllers.user import User
@@ -56,11 +58,14 @@ def user_route():
         return jsonify(res)
 
 
-@application.route('/API/user/#/<int:user_id>', methods=['GET'])
+@application.route('/API/user/<int:user_id>', methods=['GET', 'OPTIONS'])
 def userid_routes(user_id):
     if request.method == 'GET':
         res = User().getUserbyID(user_id)
-        res.headers.add('Access-Control-Allow-Origin', '*')
+        #res.headers.add('Access-Control-Allow-Origin', '*')
+        return res
+    elif request.method == 'OPTIONS':
+        res = OutagesMap().insertUserOutages(user_id)
         return res
     else:
         res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
@@ -207,13 +212,16 @@ def mediareport_route():
         return err
 
 
-@application.route('/API/mediareport/<int:report_id>', methods=['GET', 'DELETE'])
+@application.route('/API/mediareport/<int:report_id>', methods=['GET', 'DELETE', 'OPTIONS'])
 def mediareport_byid_route(report_id):
     if request.method == 'GET':
         res = MediaReport().getMediaReportById(report_id)
         return res
     elif request.method == 'DELETE':
         res = MediaReport().deleteMediaReport(report_id)
+        return res
+    elif request.method == 'OPTIONS':
+        res = OutagesMap().insertMediaOutages(report_id)
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
@@ -238,7 +246,7 @@ def apireport_route():
         return err
 
 
-@application.route('/API/apireport/<int:report_id>', methods=['GET', 'DELETE'])
+@application.route('/API/apireport/<int:report_id>', methods=['GET', 'DELETE', 'OPTIONS'])
 def apireport_byid_route(report_id):
     if request.method == 'GET':
         res = ApiReport().getApiReportById(report_id)
@@ -246,13 +254,16 @@ def apireport_byid_route(report_id):
     elif request.method == 'DELETE':
         res = ApiReport().deleteApiReport(report_id)
         return res
+    elif request.method == 'OPTIONS':
+        res = OutagesMap().insertAPIOutages(report_id)
+        return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
 
 
-@application.route("/components")
-def components():
+@application.route("/home_map")
+def home_map():
     """Extract map components and put those on a page."""
     m = folium.Map(
         location=[18.2269, -66.391],
@@ -260,6 +271,14 @@ def components():
         height=600,
         zoom_start=9
     )
+
+    function_data = latlongs()
+
+    for i in range(0, len(function_data['lat'])):
+        folium.Marker(
+            location=[function_data['lat'][i], function_data['lng'][i]],
+            popup=function_data['type'][i]
+        ).add_to(m)
 
     m.get_root().render()
     header = m.get_root().header.render()
@@ -286,16 +305,36 @@ def components():
         script=script,
     )
 
+
 # UTILITY METHODS ROUTES
 
-@application.route('/API/utils/latlon', methods=['GET'])
+@application.route('/API/utils/latlon', methods=['GET', 'OPTIONS'])
 def address_to_latlon():
     if request.method == 'GET':
         res = utilMethods().addressToLatLong(request.json)
         return res
+    elif request.method == 'OPTIONS':
+        res = latlongs()
+        return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
+
+
+def latlongs():
+    res = OutagesMap().getAllOutages()
+    result = defaultdict(list)
+    for outages in res:
+        dict_outage = dict(outages)
+        result['lat'].append(dict_outage['outage_lat'])
+        result['lng'].append(dict_outage['outage_lng'])
+        result['type'].append(dict_outage['outage_type'])
+    return result
+
+    # data = pandas.DataFrame({
+    #
+    # })
+
 
 if __name__ == '__main__':
     application.run()

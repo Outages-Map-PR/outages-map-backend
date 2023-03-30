@@ -1,4 +1,6 @@
 from flask import jsonify
+
+from controllers.outagesMap import OutagesMap
 from model.user_report import UserReportDao
 
 
@@ -32,6 +34,12 @@ class UserReport:
             return jsonify(result), 200
         else:
             return jsonify("REPORTS NOT FOUND"), 404
+
+    def getApiReportById(self, report_id):
+        dao = UserReportDao()
+        t = dao.getAllUserReportsById(report_id)
+        result = self.build_row_dict(t)
+        return jsonify(result)
 
     def getSameTypeReports(self, json):
         dao = UserReportDao()
@@ -94,11 +102,12 @@ class UserReport:
         report_address = json["report_address"]
         report_type = json["report_type"]
         report_company = json["report_company"]
-        new_report = dao.createReport(user_name, report_address, report_type, report_company)
-        if new_report:
-            return 200, jsonify("REPORT ADDED")
+        report_id = dao.createReport(user_name, report_address, report_type, report_company)
+        outage_map = OutagesMap().insertUserOutages(report_id)
+        if report_id:
+            return outage_map
         else:
-            return 400, jsonify("REPORT NOT ADDED")
+            return jsonify("REPORT NOT ADDED")
 
     def updateValidation(self, json):
         dao = UserReportDao()
