@@ -10,6 +10,7 @@ from controllers.outagesMap import OutagesMap
 from controllers.apiReport import ApiReport
 from controllers.mediaReport import MediaReport
 from controllers.user_report import UserReport
+from controllers.utilMethods import utilMethods
 
 application = Flask(__name__)
 application.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -285,6 +286,16 @@ def components():
         script=script,
     )
 
+# UTILITY METHODS ROUTES
+
+@application.route('/API/utils/latlon', methods=['GET'])
+def address_to_latlon():
+    if request.method == 'GET':
+        res = utilMethods().addressToLatLong(request.json)
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
 
 if __name__ == '__main__':
     application.run()
