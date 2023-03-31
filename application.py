@@ -1,5 +1,4 @@
 # APPLICATION LIBRARIES
-import pandas
 from flask import Flask, request, render_template_string
 from flask.json import jsonify
 import folium
@@ -62,7 +61,7 @@ def user_route():
 def userid_routes(user_id):
     if request.method == 'GET':
         res = User().getUserbyID(user_id)
-        #res.headers.add('Access-Control-Allow-Origin', '*')
+        # res.headers.add('Access-Control-Allow-Origin', '*')
         return res
     elif request.method == 'OPTIONS':
         res = OutagesMap().insertUserOutages(user_id)
@@ -262,8 +261,8 @@ def apireport_byid_route(report_id):
         return err
 
 
-@application.route("/home_map")
-def home_map():
+@application.route("/map/<string:page>/<string:filters>")
+def home_map(page, filters):
     """Extract map components and put those on a page."""
     m = folium.Map(
         location=[18.2269, -66.391],
@@ -272,13 +271,34 @@ def home_map():
         zoom_start=9
     )
 
-    function_data = latlongs()
+    if page == 'home' and filters == 'none':
 
-    for i in range(0, len(function_data['lat'])):
-        folium.Marker(
-            location=[function_data['lat'][i], function_data['lng'][i]],
-            popup=function_data['type'][i]
-        ).add_to(m)
+        function_data = latlongsAllbyType()
+
+        water = function_data[0]
+        power = function_data[1]
+        internet = function_data[2]
+
+        for i in range(0, len(water['lat'])):
+            folium.Marker(
+                location=[water['lat'][i], water['lng'][i]],
+                popup=water['type'][i],
+                icon=folium.Icon(icon_color='black', icon='fa-tint', prefix='fa', color='lightblue')
+            ).add_to(m)
+
+        for i in range(0, len(power['lat'])):
+            folium.Marker(
+                location=[power['lat'][i], power['lng'][i]],
+                popup=power['type'][i],
+                icon=folium.Icon(icon_color='black', icon='fa-plug', prefix='fa', color='blue')
+            ).add_to(m)
+
+        for i in range(0, len(internet['lat'])):
+            folium.Marker(
+                location=[internet['lat'][i], internet['lng'][i]],
+                popup=internet['type'][i],
+                icon=folium.Icon(icon_color='black', icon='fa-laptop', prefix='fa', color='darkblue')
+            ).add_to(m)
 
     m.get_root().render()
     header = m.get_root().header.render()
@@ -314,26 +334,42 @@ def address_to_latlon():
         res = utilMethods().addressToLatLong(request.json)
         return res
     elif request.method == 'OPTIONS':
-        res = latlongs()
+        res = latlongsAllbyType()
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
 
 
-def latlongs():
+# HELPER FUNCTIONS FOR MAP
+def latlongsAllbyType():
     res = OutagesMap().getAllOutages()
-    result = defaultdict(list)
+    water = defaultdict(list)
+    power = defaultdict(list)
+    internet = defaultdict(list)
+
+    result = []
+
     for outages in res:
         dict_outage = dict(outages)
-        result['lat'].append(dict_outage['outage_lat'])
-        result['lng'].append(dict_outage['outage_lng'])
-        result['type'].append(dict_outage['outage_type'])
-    return result
+        type_outage = dict_outage['outage_type']
+        if type_outage == 'water':
+            water['lat'].append(dict_outage['outage_lat'])
+            water['lng'].append(dict_outage['outage_lng'])
+            water['type'].append(dict_outage['outage_type'])
+        if type_outage == 'power':
+            power['lat'].append(dict_outage['outage_lat'])
+            power['lng'].append(dict_outage['outage_lng'])
+            power['type'].append(dict_outage['outage_type'])
+        if type_outage == 'internet':
+            internet['lat'].append(dict_outage['outage_lat'])
+            internet['lng'].append(dict_outage['outage_lng'])
+            internet['type'].append(dict_outage['outage_type'])
 
-    # data = pandas.DataFrame({
-    #
-    # })
+    result.append(water)
+    result.append(power)
+    result.append(internet)
+    return result
 
 
 if __name__ == '__main__':
