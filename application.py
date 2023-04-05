@@ -266,8 +266,6 @@ def home_map(page, filters):
     """Extract map components and put those on a page."""
     m = folium.Map(
         location=[18.2269, -66.391],
-        width=800,
-        height=600,
         zoom_start=9
     )
 

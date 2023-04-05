@@ -8,11 +8,11 @@ class UserBehavior(HttpUser):
 
     @task
     def login(self):
-        self.client.get("/API/user/login", json={
+        self.client.post("/API/user/login", json={
             "user_email": "test2@gmail.com",
             "user_password": "this_is_a_test"
         })
 
     @task
     def outage_map(self):
-        self.client.get("/API/outagesmap")
+        self.client.get("/map/home/none")
