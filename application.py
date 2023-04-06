@@ -151,7 +151,7 @@ def user_match_company():
 
 # OUTAGES MAP REPORT ROUTES
 
-@application.route('/API/outagesmap', methods=['GET', 'POST', 'PUT'])
+@application.route('/API/outagesmap', methods=['GET', 'POST', 'PUT', 'OPTIONS', 'PATCH'])
 def outagesmap_route():
     if request.method == 'GET':
         res = OutagesMap().getAllOutages()
@@ -161,6 +161,12 @@ def outagesmap_route():
         return res
     elif request.method == 'PUT':
         res = OutagesMap().updateOutages(request.json)
+        return res
+    elif request.method == 'OPTIONS':
+        res = OutagesMap().getLastTenOutages()
+        return res
+    elif request.method == 'PATCH':
+        res = OutagesMap().getHistoricalOutages()
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}

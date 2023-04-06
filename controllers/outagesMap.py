@@ -51,6 +51,22 @@ class OutagesMap:
         for t in tuples:
             result.append(self.build_row_dict(t))
         return result
+
+    def getLastTenOutages(self):
+        dao = OutagesMapDAO()
+        tuples = dao.getLastTenOutages()
+        result = []
+        for t in tuples:
+            result.append(self.build_row_dict(t))
+        return result
+
+    def getHistoricalOutages(self):
+        dao = OutagesMapDAO()
+        tuples = dao.getHistoricalOutages()
+        result = []
+        for t in tuples:
+            result.append(self.build_row_dict(t))
+        return result
     
     def getOutagesById(self, outages_id):
         dao = OutagesMapDAO()

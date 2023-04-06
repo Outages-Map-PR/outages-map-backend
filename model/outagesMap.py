@@ -9,12 +9,31 @@ class OutagesMapDAO():
         
     def getAllOutages(self):
         cursor = self.conn.cursor()
-        query = "select outages_id, report_id, outage_type, outage_lat, outage_lng, outage_source, outage_date, outage_company, active from outages_map;"
+        query = "select outages_id, report_id, outage_type, outage_lat, outage_lng, outage_source, outage_date, outage_company, active from outages_map order by outage_date desc;"
         cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)
         return result
+
+    def getLastTenOutages(self):
+        cursor = self.conn.cursor()
+        query = "select outages_id, report_id, outage_type, outage_lat, outage_lng, outage_source, outage_date, outage_company, active from outages_map order by outage_date desc limit 10;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getHistoricalOutages(self):
+        cursor = self.conn.cursor()
+        query = "select outages_id, report_id, outage_type, outage_lat, outage_lng, outage_source, outage_date, outage_company, active from outages_map order by outage_date asc;"
+        cursor.execute(query)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
     
     def getOutagesById(self, outages_id):
         cursor = self.conn.cursor()
