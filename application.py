@@ -348,11 +348,11 @@ def address_to_latlon():
 @application.route('/API/analytics/all', methods=['GET'])
 def get_all_analytics():
     try:
-        request.json['date']
+        request.args['date']
     except:
         return jsonify({"error": "NO 'date' FIELD SPECIFIED"})
     if request.method == 'GET':
-        res = serviceAnalytics().getAllAnalytics(request.json['date'])
+        res = serviceAnalytics().getAllAnalytics(request.args['date'])
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
@@ -361,11 +361,11 @@ def get_all_analytics():
 @application.route('/API/analytics/power', methods=['GET'])
 def get_power_analytics():
     try:
-        request.json['date']
+        request.args['date']
     except:
-        return jsonify({"error": "NO 'date' FIELD SPECIFIED"})
+        return jsonify({"error": "NO 'date' PARAM SPECIFIED"})
     if request.method == 'GET':
-        res = serviceAnalytics().getServiceAnalytics(request.json['date'], 'power')
+        res = serviceAnalytics().getServiceAnalytics(request.args['date'], 'power')
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
@@ -374,11 +374,11 @@ def get_power_analytics():
 @application.route('/API/analytics/water', methods=['GET'])
 def get_water_analytics():
     try:
-        request.json['date']
+        request.args['date']
     except:
-        return jsonify({"error": "NO 'date' FIELD SPECIFIED"})
+        return jsonify({"error": "NO 'date' PARAM SPECIFIED"})
     if request.method == 'GET':
-        res = serviceAnalytics().getServiceAnalytics(request.json['date'], 'water')
+        res = serviceAnalytics().getServiceAnalytics(request.args['date'], 'water')
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
@@ -387,11 +387,11 @@ def get_water_analytics():
 @application.route('/API//analytics/internet', methods=['GET'])
 def get_internet_analytics():
     try:
-        request.json['date']
+        request.args['date']
     except:
-        return jsonify({"error": "NO 'date' FIELD SPECIFIED"})
+        return jsonify({"error": "NO 'date' PARAM SPECIFIED"})
     if request.method == 'GET':
-        res = serviceAnalytics().getServiceAnalytics(request.json['date'], 'internet')
+        res = serviceAnalytics().getServiceAnalytics(request.args['date'], 'internet')
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
