@@ -13,19 +13,19 @@ class analyticsDAO():
                                                                             pg_config['port'], pg_config['host'])
         self.conn = psycopg2.connect(connection_url)  
             
-    def getServiceAnalytics(self, date, type):
+    def getServiceAnalytics(self, date, outage_type):
         # Date is formatted yyyy-mm
-        # type: POWER, WATER, INTERNET
+        # outage_type: POWER, WATER, INTERNET
         cursor = self.conn.cursor()
         query = "SELECT * FROM outages_map WHERE to_char(outage_date, 'yyyy-mm') = %s AND outage_type = %s"
-        if type == POWER:
+        if outage_type == POWER:
             cursor.execute(query, (date, POWER))
-        elif type == WATER:
+        elif outage_type == WATER:
             cursor.execute(query, (date, WATER))
-        elif type == INTERNET:
+        elif outage_type == INTERNET:
             cursor.execute(query, (date, INTERNET))
         else: 
-            return({'error': 'Wrong type defined.'})
+            return({'error': 'Wrong outage_type defined.'})
         result = []
         for row in cursor:
             result.append(row)
@@ -37,3 +37,27 @@ class analyticsDAO():
         water_t = self.getServiceAnalytics(date, WATER)
         internet_t = self.getServiceAnalytics(date, INTERNET)
         return (power_t, water_t, internet_t)
+    
+    def getAnalyticsDayCount(self, date, outage_type):
+        # Date is formatted yyyy-mm
+        # outage_type: POWER, WATER, INTERNET
+        cursor = self.conn.cursor()
+        query = """
+            SELECT DATE_TRUNC('day', outage_date)::DATE AS daily_date,
+            COUNT(*) AS report_count
+            FROM outages_map
+            WHERE to_char(outage_date, 'yyyy-mm') = %s
+            AND outage_type = %s
+            GROUP BY DATE_TRUNC('day', outage_date)
+            ORDER BY DATE_TRUNC('day', outage_date)
+        """
+        if outage_type == POWER:
+            cursor.execute(query, (date, POWER))
+        elif outage_type == WATER:
+            cursor.execute(query, (date, WATER))
+        elif outage_type == INTERNET:
+            cursor.execute(query, (date, INTERNET))
+        else: 
+            return({'error': 'Wrong outage_type defined.'})
+        result = cursor.fetchall()
+        return result

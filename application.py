@@ -384,7 +384,7 @@ def get_water_analytics():
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
        
-@application.route('/API//analytics/internet', methods=['GET'])
+@application.route('/API/analytics/internet', methods=['GET'])
 def get_internet_analytics():
     try:
         request.args['date']
@@ -396,6 +396,20 @@ def get_internet_analytics():
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
+    
+@application.route('/API/analytics/count', methods=['GET'])
+def get_analytics_count():
+    try:
+        request.args['date']
+    except:
+        return jsonify({"error": "NO 'date' PARAM SPECIFIED"})
+    if request.method == 'GET':
+        res = serviceAnalytics().getAllAnalyticsAndCount(request.args['date'])
+        return res
+    else:
+        err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
+        return err
+    
 
 # HELPER FUNCTIONS FOR MAP
 def latlongsAllbyType():
