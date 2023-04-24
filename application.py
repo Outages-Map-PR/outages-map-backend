@@ -84,7 +84,7 @@ def login_route():
 
 
 # USER REPORT ROUTES
-@application.route('/API/report/user', methods=['GET', 'PUT', 'POST'])
+@application.route('/API/userreport', methods=['GET', 'PUT', 'POST'])
 def user_report_routes():
     if request.method == 'GET':
         res = UserReport().getAllReports()
