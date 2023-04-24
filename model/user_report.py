@@ -11,7 +11,7 @@ class UserReportDao:
 
     def getAllReports(self):
         cursor = self.conn.cursor()
-        query = "select user_name, report_address, report_type, report_date from \"user_report\""
+        query = "select report_id, user_name, report_address, report_type, report_company, report_date, report_validated from \"user_report\""
         cursor.execute(query)
         result = []
         for row in cursor:
