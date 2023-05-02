@@ -268,42 +268,47 @@ def apireport_byid_route(report_id):
         return err
 
 
-@application.route("/map/<string:page>/<string:filters>")
-def home_map(page, filters):
+@application.route("/map/<string:page>")
+def home_map(page):
     """Extract map components and put those on a page."""
     m = folium.Map(
         location=[18.2269, -66.391],
         zoom_start=9
     )
 
-    if page == 'home' and filters == 'none':
+    filters = request.args['filters']
 
-        function_data = latlongsAllbyType()
+    if page == 'home':
+
+        function_data = latlongsFilterByType(filters)
 
         water = function_data[0]
         power = function_data[1]
         internet = function_data[2]
 
-        for i in range(0, len(water['lat'])):
-            folium.Marker(
-                location=[water['lat'][i], water['lng'][i]],
-                popup=water['type'][i],
-                icon=folium.Icon(icon_color='black', icon='fa-tint', prefix='fa', color='lightblue')
-            ).add_to(m)
+        if len(water) != 0:
+            for i in range(0, len(water['lat'])):
+                folium.Marker(
+                    location=[water['lat'][i], water['lng'][i]],
+                    popup=water['type'][i],
+                    icon=folium.Icon(icon_color='black', icon='fa-tint', prefix='fa', color='lightblue')
+                ).add_to(m)
 
-        for i in range(0, len(power['lat'])):
-            folium.Marker(
-                location=[power['lat'][i], power['lng'][i]],
-                popup=power['type'][i],
-                icon=folium.Icon(icon_color='black', icon='fa-plug', prefix='fa', color='blue')
-            ).add_to(m)
+        if len(power) != 0:
+            for i in range(0, len(power['lat'])):
+                folium.Marker(
+                    location=[power['lat'][i], power['lng'][i]],
+                    popup=power['type'][i],
+                    icon=folium.Icon(icon_color='black', icon='fa-plug', prefix='fa', color='blue')
+                ).add_to(m)
 
-        for i in range(0, len(internet['lat'])):
-            folium.Marker(
-                location=[internet['lat'][i], internet['lng'][i]],
-                popup=internet['type'][i],
-                icon=folium.Icon(icon_color='black', icon='fa-laptop', prefix='fa', color='darkblue')
-            ).add_to(m)
+        if len(internet) != 0:
+            for i in range(0, len(internet['lat'])):
+                folium.Marker(
+                    location=[internet['lat'][i], internet['lng'][i]],
+                    popup=internet['type'][i],
+                    icon=folium.Icon(icon_color='black', icon='fa-laptop', prefix='fa', color='darkblue')
+                ).add_to(m)
 
     m.get_root().render()
     header = m.get_root().header.render()
@@ -339,7 +344,7 @@ def address_to_latlon():
         res = utilMethods().addressToLatLong(request.json)
         return res
     elif request.method == 'OPTIONS':
-        res = latlongsAllbyType()
+        res = latlongsFilterByType(["all"])
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
@@ -412,7 +417,7 @@ def get_analytics_count():
     
 
 # HELPER FUNCTIONS FOR MAP
-def latlongsAllbyType():
+def latlongsFilterByType(filters):
     res = OutagesMap().getAllOutages()
     water = defaultdict(list)
     power = defaultdict(list)
@@ -432,15 +437,28 @@ def latlongsAllbyType():
             power['lng'].append(dict_outage['outage_lng'])
             power['type'].append(dict_outage['outage_type'])
         if type_outage == 'internet':
-            internet['lat'].append(dict_outage['outage_lat'])
-            internet['lng'].append(dict_outage['outage_lng'])
-            internet['type'].append(dict_outage['outage_type'])
+            if (dict_outage['outage_company'] == 'Liberty' and 'liberty' in filters) or \
+                (dict_outage['outage_company'] == 'Claro' and 'claro' in filters) or \
+                (dict_outage['outage_company'] == 'AT&T' and 'at&t' in filters) or \
+                'all' in filters:
+                internet['lat'].append(dict_outage['outage_lat'])
+                internet['lng'].append(dict_outage['outage_lng'])
+                internet['type'].append(dict_outage['outage_type'])
 
-    result.append(water)
-    result.append(power)
-    result.append(internet)
+    if "water" in filters or "all" in filters:
+        result.append(water)
+    else:
+        result.append([])
+    if "power" in filters or "all" in filters:
+        result.append(power)
+    else:
+        result.append([])
+    if "internet" in filters or "all" in filters:
+        result.append(internet)
+    else:
+        result.append([])
+
     return result
-
 
 if __name__ == '__main__':
     application.run()
