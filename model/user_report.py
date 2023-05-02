@@ -31,7 +31,7 @@ class UserReportDao:
 
     def getSameUserReports(self, user_name):
         cursor = self.conn.cursor()
-        query = "select user_name, report_address, report_date from \"user_report\" where user_name = %s"
+        query = "select user_name, report_address, report_date from \"user_report\" where user_email = %s"
         cursor.execute(query, user_name)
         result = []
         for row in cursor:

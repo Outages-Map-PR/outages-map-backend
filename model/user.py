@@ -79,8 +79,11 @@ class UserDAO:
 
     def getUserbyID(self, user_id):
         cursor = self.conn.cursor()
-        query = "select user_email from \"user\" where user_id = %s"
+        query = "select user_email, user_phone from \"user\" where user_id = %s"
         cursor.execute(query, (user_id,))
-        result = cursor.fetchone()[0]
+        result = []
+        for rows in cursor:
+            result.append(rows[0])
+            result.append(rows[1])
         cursor.close()
         return result
