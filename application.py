@@ -110,10 +110,10 @@ def user_match_type():
         return jsonify(res)
 
 
-@application.route('/API/report/user/match/user', methods=['GET'])
-def user_match_user():
+@application.route('/API/report/<user_email>', methods=['GET'])
+def user_match_user(user_email):
     if request.method == 'GET':
-        res = UserReport().getSameUserReports(request.json)
+        res = UserReport().getSameUserReports(str(user_email))
         return res
     else:
         res = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
