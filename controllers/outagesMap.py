@@ -115,12 +115,21 @@ class OutagesMap:
             return jsonify("REPORT NOT FOUND")
         # return str(json[6])
         coordinates = utilMethodsDAO().addressToLatLon(json[2])
-        for lat_lng in coordinates:
-            if lat_lng != "ERROR":
-                arr = coordinates[lat_lng].split(",")
-                latitude = arr[0]
-                longitude = arr[1]
-                break
+        if coordinates["photon"] != "ERROR":
+            arr = coordinates["photon"].split(",")
+            latitude = arr[0]
+            longitude = arr[1]
+        elif coordinates["maptiler"] != "ERROR":
+            arr = coordinates["maptiler"].split(",")
+            latitude = arr[0]
+            longitude = arr[1]
+        else:
+            for lat_lng in coordinates:
+                if lat_lng != "ERROR":
+                    arr = coordinates[lat_lng].split(",")
+                    latitude = arr[0]
+                    longitude = arr[1]
+                    break
         report_id = json[0]
         outage_type = json[3]
         outage_lat = latitude
@@ -142,12 +151,21 @@ class OutagesMap:
             return jsonify("REPORT NOT FOUND")
         # return str(json)
         coordinates = utilMethodsDAO().addressToLatLon(json[2])
-        for lat_lng in coordinates:
-            if coordinates[lat_lng] != "ERROR":
-                arr = coordinates[lat_lng].split(",")
-                latitude = arr[0]
-                longitude = arr[1]
-                break
+        if coordinates["photon"] != "ERROR":
+            arr = coordinates["photon"].split(",")
+            latitude = arr[0]
+            longitude = arr[1]
+        elif coordinates["maptiler"] != "ERROR":
+            arr = coordinates["maptiler"].split(",")
+            latitude = arr[0]
+            longitude = arr[1]
+        else:
+            for lat_lng in coordinates:
+                if lat_lng != "ERROR":
+                    arr = coordinates[lat_lng].split(",")
+                    latitude = arr[0]
+                    longitude = arr[1]
+                    break
         report_id = json[0]
         outage_type = json[3]
         outage_lat = latitude
@@ -170,12 +188,21 @@ class OutagesMap:
             return jsonify("REPORT NOT FOUND")
         # return str(json)
         coordinates = utilMethodsDAO().addressToLatLon(json[2])
-        for lat_lng in coordinates:
-            if coordinates[lat_lng] != "ERROR":
-                arr = coordinates[lat_lng].split(",")
-                latitude = arr[0]
-                longitude = arr[1]
-                break
+        if coordinates["photon"] != "ERROR":
+            arr = coordinates["photon"].split(",")
+            latitude = arr[0]
+            longitude = arr[1]
+        elif coordinates["maptiler"] != "ERROR":
+            arr = coordinates["maptiler"].split(",")
+            latitude = arr[0]
+            longitude = arr[1]
+        else:
+            for lat_lng in coordinates:
+                if lat_lng != "ERROR":
+                    arr = coordinates[lat_lng].split(",")
+                    latitude = arr[0]
+                    longitude = arr[1]
+                    break
         report_id = json[0]
         outage_type = json[3]
         outage_lat = latitude
