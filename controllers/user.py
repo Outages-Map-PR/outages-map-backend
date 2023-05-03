@@ -78,6 +78,6 @@ class User:
         dao = UserDAO()
         username = dao.getUserbyID(user_id)
         if username:
-            return jsonify(username), 200
+            return username, 200
         else:
             return jsonify("USER NOT FOUND"), 404

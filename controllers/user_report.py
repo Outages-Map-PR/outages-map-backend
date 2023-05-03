@@ -17,6 +17,16 @@ class UserReport:
         }
         return result
 
+    def build_row_dicv2(self, row):
+        result = {
+            "report_address": row[0],
+            "report_date": row[1],
+            "report_type": row[2],
+            "report_company": row[3],
+
+        }
+        return result
+
     def build_attr_dic(self, report_id, user_name, report_address, report_type, report_company, report_date,
                        report_validated):
         result = {'report_id': report_id, 'user_name': user_name, 'report_address': report_address,
@@ -52,12 +62,12 @@ class UserReport:
         else:
             return jsonify("REPORTS NOT FOUND"), 404
 
-    def getSameUserReports(self, json):
+    def getSameUserReports(self, user_email):
         dao = UserReportDao()
-        reports = dao.getSameUserReports(json[0])
+        reports = dao.getSameUserReports(user_email)
         result = []
         for report in reports:
-            result.append(self.build_row_dic(report))
+            result.append(self.build_row_dicv2(report))
         if result:
             return jsonify(result), 200
         else:
