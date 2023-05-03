@@ -273,9 +273,15 @@ def home_map(page):
     """Extract map components and put those on a page."""
     m = folium.Map(
         location=[18.2269, -66.391],
-        zoom_start=9
+        zoom_start=10,
+        minZoom=8.5,
+        max_bounds=True,
+        min_lat=18.215948,
+        min_lon=-67.438901,
+        max_lon=-65.131234,
+        max_lat=18.215948
     )
-
+    #m.fit_bounds([[18.215948, -67.438901], [18.215948, ]])
     filters = request.args['filters']
 
     if page == 'home':
