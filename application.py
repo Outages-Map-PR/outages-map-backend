@@ -350,6 +350,7 @@ def address_to_latlon():
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
 
+
 @application.route('/API/analytics/all', methods=['GET'])
 def get_all_analytics():
     try:
@@ -362,7 +363,8 @@ def get_all_analytics():
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
-    
+
+
 @application.route('/API/analytics/power', methods=['GET'])
 def get_power_analytics():
     try:
@@ -374,8 +376,9 @@ def get_power_analytics():
         return res
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
-        return err 
-       
+        return err
+
+
 @application.route('/API/analytics/water', methods=['GET'])
 def get_water_analytics():
     try:
@@ -388,7 +391,8 @@ def get_water_analytics():
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
-       
+
+
 @application.route('/API/analytics/internet', methods=['GET'])
 def get_internet_analytics():
     try:
@@ -401,7 +405,8 @@ def get_internet_analytics():
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
-    
+
+
 @application.route('/API/analytics/count', methods=['GET'])
 def get_analytics_count():
     try:
@@ -414,7 +419,7 @@ def get_analytics_count():
     else:
         err = {"error": "METHOD NOT SUPPORTED IN ROUTE"}
         return err
-    
+
 
 # HELPER FUNCTIONS FOR MAP
 def latlongsFilterByType(filters):
@@ -438,9 +443,9 @@ def latlongsFilterByType(filters):
             power['type'].append(dict_outage['outage_type'])
         if type_outage == 'internet':
             if (dict_outage['outage_company'] == 'Liberty' and 'liberty' in filters) or \
-                (dict_outage['outage_company'] == 'Claro' and 'claro' in filters) or \
-                (dict_outage['outage_company'] == 'AT&T' and 'at&t' in filters) or \
-                'all' in filters:
+                    (dict_outage['outage_company'] == 'Claro' and 'claro' in filters) or \
+                    (dict_outage['outage_company'] == 'AT&T' and 'at&t' in filters) or \
+                    'all' in filters:
                 internet['lat'].append(dict_outage['outage_lat'])
                 internet['lng'].append(dict_outage['outage_lng'])
                 internet['type'].append(dict_outage['outage_type'])
@@ -459,6 +464,7 @@ def latlongsFilterByType(filters):
         result.append([])
 
     return result
+
 
 if __name__ == '__main__':
     application.run()
