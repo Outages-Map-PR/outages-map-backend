@@ -1,5 +1,6 @@
 import threading
 import geopy
+import json
 
 # Definitions
 NOMINATIM = 'nominatim'
@@ -22,6 +23,12 @@ geocoders = [
     TOMTOM 
 ]
 
+# Lat and Long constraints for PR
+PR_TOP = 18.713150      # TOP, X    : lower
+PR_RIGHT = -65.108251   # X, RIGHT  : lower
+PR_BOT = 17.799704      # BOT, X    : higher
+PR_LEFT = -68.057893    # X, LEFT   : higher
+
 ### HELPER FUNCTION ###
 
 def locationByGeocoder(locator, address):
@@ -36,6 +43,23 @@ def locationByGeocoder(locator, address):
     except:
         # Error extracting latitude and longitude attributes
         return "ERROR"
+    
+def geolocationConstraint(res):
+    for k in res.keys():
+        if res[k] == "ERROR":
+            continue
+
+        lat_lon = res[k].split(',') # [lon, lat]
+        lat_lon[0] = float(lat_lon[0])
+        lat_lon[1] = float(lat_lon[1])
+
+        # Latitude and Longitude constraint
+        if lat_lon[1] > PR_RIGHT or lat_lon[1] < PR_LEFT \
+            or lat_lon[0] > PR_TOP or lat_lon[0] < PR_BOT:
+            res[k] = "ERROR"
+
+    return res
+
 
 #######################
 
@@ -76,4 +100,5 @@ class utilMethodsDAO():
         for thread in threads:
             thread.join()
 
+        res = geolocationConstraint(res)
         return res
