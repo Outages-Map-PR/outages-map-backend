@@ -2,6 +2,8 @@
 from flask import Flask, request, render_template_string
 from flask.json import jsonify
 import folium
+import threading
+import time
 from flask_cors import CORS
 from collections import defaultdict
 
@@ -438,6 +440,8 @@ def latlongsFilterByType(filters):
 
     for outages in res:
         dict_outage = dict(outages)
+        if dict_outage['active'] == False:
+            continue
         type_outage = dict_outage['outage_type']
         if type_outage == 'water':
             water['lat'].append(dict_outage['outage_lat'])
@@ -471,6 +475,12 @@ def latlongsFilterByType(filters):
 
     return result
 
+def thread_monitor_outages():
+    while True:
+        print(utilMethods().monitor_outages())
+        time.sleep(3600)
 
 if __name__ == '__main__':
+    monitor_thread = threading.Thread(target=thread_monitor_outages)
+    monitor_thread.start()
     application.run()
