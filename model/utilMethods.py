@@ -1,6 +1,8 @@
 import threading
 import geopy
 import json
+from config.dbconfig import pg_config
+import psycopg2
 
 # Definitions
 NOMINATIM = 'nominatim'
@@ -65,6 +67,12 @@ def geolocationConstraint(res):
 
 class utilMethodsDAO():
     
+    def __init__(self) -> None:
+        connection_url = "dbname=%s user=%s password=%s port=%s host=%s" % (pg_config['dbname'],
+                                                                            pg_config['user'], pg_config['password'],
+                                                                            pg_config['port'], pg_config['host'])
+        self.conn = psycopg2.connect(connection_url)
+    
     def addressToLatLon(self, address):
         res = {}
         threads = []
@@ -102,3 +110,11 @@ class utilMethodsDAO():
 
         res = geolocationConstraint(res)
         return res
+    
+    def monitor_outages(self):
+        cursor = self.conn.cursor()
+        query = "update outages_map set active = false where outage_date < current_date - interval '1 week'"
+        cursor.execute(query)
+        self.conn.commit()
+        affected_rows = cursor.rowcount
+        return affected_rows != 0
