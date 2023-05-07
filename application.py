@@ -276,10 +276,10 @@ def home_map(page):
         zoom_start=10,
         minZoom=8.5,
         max_bounds=True,
-        min_lat=18.215948,
+        min_lat=17.525557,
         min_lon=-67.438901,
         max_lon=-65.131234,
-        max_lat=18.215948
+        max_lat=18.754371
     )
     #m.fit_bounds([[18.215948, -67.438901], [18.215948, ]])
     filters = request.args['filters']
