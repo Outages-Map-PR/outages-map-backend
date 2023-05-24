@@ -1,0 +1,32 @@
+#,report_id,media_type,report_address,report_type,report_company,report_date
+1,3,test3,test address,test type3,test company3,0101-01-01
+2,8,Facebook,"Monte Real, Coamo, PR",water,AAA,2023-03-30
+3,9,Facebook,"Niagara, Coamo, PR",water,AAA,2023-03-30
+4,10,Facebook,"Monde Grande, Coamo, PR",water,AAA,2023-03-30
+5,11,Facebook,"Algarrobo, Coamo, PR",water,AAA,2023-03-30
+6,12,Facebook,"El Melon, Coamo, PR",water,AAA,2023-03-30
+7,14,Facebook,"Palmarejo, Coamo, PR",water,AAA,2023-03-30
+8,15,Facebook,"Palmarejo Arriba, Coamo, PR",water,AAA,2023-03-30
+9,150,Facebook,"Fajardo, Puerto Rico",power,LUMA,2023-03-30
+10,152,Facebook,"Luquillo, Puerto Rico",power,LUMA,2023-03-06
+11,153,Facebook,"Mayagüez, Puerto Rico",water,AAA,2023-03-12
+12,155,Facebook,"Vega Alta, Puerto Rico",water,AAA,2023-03-05
+13,156,Facebook,"San Lorenzo, Puerto Rico",internet,AT&T,2023-03-03
+14,157,Facebook,"Toa Alta, Puerto Rico",water,AAA,2023-03-12
+15,159,Facebook,"Trujillo Alto, Puerto Rico",water,AAA,2023-03-10
+16,160,Facebook,"Morovis, Puerto Rico",internet,Claro,2023-03-07
+17,161,Facebook,"Sábana Grande, Puerto Rico",water,AAA,2023-03-04
+18,162,Facebook,"Naguabo, Puerto Rico",water,AAA,2023-03-08
+19,149,Facebook,"San Sebastián, Puerto Rico",internet,Liberty,2023-03-17
+20,170,Facebook,"Vega Baja, Puerto Rico",water,AAA,2023-04-23
+21,171,Facebook,"Añasco, Puerto Rico",internet,Liberty,2023-04-24
+22,178,Facebook,"Juana Diaz, Puerto Rico",power,LUMA,2023-04-28
+23,179,Facebook,"Lajas, Puerto Rico",power,LUMA,2023-04-03
+24,180,Facebook,"Luquillo, Puerto Rico",internet,Claro,2023-04-21
+25,183,Facebook,"Morovis, Puerto Rico",water,AAA,2023-04-30
+26,184,Facebook,"Aguadilla, Puerto Rico",water,AAA,2023-04-09
+27,186,Facebook,"Manatí, Puerto Rico",internet,Liberty,2023-04-28
+28,189,Facebook,"Florida, Puerto Rico",power,LUMA,2023-05-07
+29,192,Facebook,"Vieques, Puerto Rico",water,AAA,2023-05-03
+30,195,Facebook,"Ceiba, Puerto Rico",water,AAA,2023-05-06
+31,198,Facebook,"Adjuntas, Puerto Rico",power,LUMA,2023-05-02

@@ -1,0 +1,20 @@
+#,user_id,user_name,user_email,user_type,user_phone,user_password,created_at,updated_at
+1,1,Pepito Perez Rodriguez,pepitoperez2@gmail.com,user,7871236987,$1$cFLvAZZ1$301CsUL7gZvtgNRrXS7dz0,2023-03-30,2023-03-30
+2,2,Alejandra Munoz,test2@gmail.com,user,7879415734,$1$U0H/MV22$.5Glim/fjs05wdEh9ISn/.,2023-03-30,2023-03-30
+3,3,John Doe,jonhdoe@gmail.com,user,7871234567,$1$PAlVPfc7$bAbOHHycNaPrU8gZ14J3/0,2023-03-30,2023-03-30
+4,4,Jane Doe,janedoe@gmail.com,user,7875234567,$1$hU7vuTDR$/fMB.M./BntcyDETAJHyl/,2023-03-30,2023-03-30
+5,5,Pepito Doe,PepitoDoe@gmail.com,user,7875234567,$1$vilnxkyy$R2hFuceUjaczeeUJnvjOd0,2023-03-30,2023-03-30
+6,6,Juanito Luz,juanito.luz@gmail.com,user,1231231234,$1$pqdlcIKv$7BkJawrVd5WAjz5qNzzIm0,2023-04-21,2023-04-21
+7,7,Jomar Santos,jomar.santos@upr.edu,user,7871231234,$1$tvrxkI/y$vsH6ipyRS1De5NxhbdeEc.,2023-04-21,2023-04-21
+8,76,123455,testing@gmail.com,user,123098456,$1$edYE5K5I$FEYc0ytjvtORMVYpYJv5n1,2023-05-07,2023-05-07
+9,78,Demo Desktop,demo1@gmail.com,user,7871230987,$1$jztTPVfz$9TkGpg9da7BwH7wVVLZGl0,2023-05-07,2023-05-07
+10,79,Testing Desktop,demo@gmail.com,user,1230987456,$1$rxw86/l9$IvOc4AhxYKe9wa/3YbIAv0,2023-05-08,2023-05-08
+11,49,behavioral test,behavioral test,user,7875234567,$1$wa0U982b$GWOPssxkLnsRA5zP1aQGL.,2023-04-27,2023-04-27
+12,50,Alejandra Munoz,maria.munoz10@upr.edu,user,7879415734,$1$vlz3ezKG$.8OacmokBeKszQNWIerBJ1,2023-04-27,2023-04-27
+13,55,Test Name,test@test.com,user,1231231234,$1$985pWROi$c2P53/vBOi3ZX3KYxBrkU.,2023-05-03,2023-05-03
+14,56,Testing Demo,demo@gmail.com,user,1230987456,$1$tX0jZa2u$tfzdpVtC8ktLa3gfYTU6X1,2023-05-07,2023-05-07
+15,57,behavioral test,behavioral test,user,7875234567,$1$Dgu9pT8J$yiAYnl46GPnIQqcW3//Az1,2023-05-07,2023-05-07
+16,58,Testing Demo,test9@gmail.com,user,1230987654,$1$BbU8xWKX$stkTJkY7cP6dI274V3MuY/,2023-05-07,2023-05-07
+17,59,Test Demo 2,test10@gmail.com,user,1230987456,$1$sKlQEDew$lrKqWvZMpu.DTsXNuJ/Hb1,2023-05-07,2023-05-07
+18,60,test demo 10,test98@gmail.com,user,1230987456,$1$GwRmVXd3$ORGbHqsaF.MeQAFGOvnE5.,2023-05-07,2023-05-07
+19,75,Testing Demo`,maria.munoz9@upr.edu,user,1230987654,$1$7Zj/1v8I$a.hldltYXfLJ4ia/m3fW5/,2023-05-07,2023-05-07

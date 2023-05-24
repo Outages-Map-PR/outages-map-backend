@@ -1,0 +1,23 @@
+#,report_id,api_name,report_address,report_type,report_company,report_date
+1,151,Twitter,"Jayuya, Puerto Rico",internet,AT&T,2023-03-15
+2,158,Twitter,"Dorado, Puerto Rico",power,LUMA,2023-03-20
+3,163,Luma,"Santa Isabel, Puerto Rico",power,LUMA,2023-03-16
+4,165,Twitter,"Cidra, Puerto Rico",water,AAA,2023-03-26
+5,166,Twitter,"Gurabo, Puerto Rico",power,LUMA,2023-03-26
+6,169,Luma,"Patillas, Puerto Rico",power,LUMA,2023-04-05
+7,2,Twitter,Mayaguez,water,AAA,2023-03-30
+8,173,Twitter,"Adjuntas, Puerto Rico",water,AAA,2023-04-08
+9,175,Twitter,"Loiza, Puerto Rico",internet,Claro,2023-04-13
+10,188,Luma,"Juncos, Puerto Rico",power,LUMA,2023-04-11
+11,3,Luma,"Arecibo, PR",power,LUMA,2023-03-30
+12,4,Luma,"Bayamon, PR",power,LUMA,2023-03-30
+13,5,Luma,"Caguas, PR",power,LUMA,2023-03-30
+14,6,Luma,"Mayaguez, PR",power,LUMA,2023-03-30
+15,7,Luma,"San Juan, PR",power,LUMA,2023-03-30
+16,190,Luma,"Guánica, Puerto Rico",power,LUMA,2023-05-07
+17,191,Luma,"Rincón, Puerto Rico",power,LUMA,2023-05-05
+18,193,Twitter,"Cidra, Puerto Rico",internet,Claro,2023-05-07
+19,187,Twitter,"Orocovis, Puerto Rico",water,AAA,2023-04-15
+20,154,Twitter,"Aibonito, Puerto Rico",internet,Liberty,2023-03-04
+21,172,Twitter,"Corozal, Puerto Rico",internet,Claro,2023-04-30
+22,197,Twitter,"Aguas Buenas, Puerto Rico",water,AAA,2023-05-03
